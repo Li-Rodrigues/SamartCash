@@ -1,0 +1,119 @@
+:root {
+    --primary: #6366f1;
+    --dark-blue: #0f172a;
+    --green: #10b981;
+    --red: #f43f5e;
+    --background: #f8fafc;
+    --white: #ffffff;
+    --text-body: #64748b;
+    --radius: 16px;
+}
+
+* { margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    background-color: var(--background);
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-blue);
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, var(--dark-blue), #1e293b);
+    padding: 4rem 1rem 10rem;
+    text-align: center;
+    color: white;
+}
+
+header h1 span { color: var(--green); font-weight: 600; }
+header p { opacity: 0.7; font-weight: 300; margin-top: 0.5rem; }
+
+.container {
+    max-width: 900px;
+    margin: -6rem auto 4rem; 
+    padding: 0 1.5rem;
+}
+
+/* Dashboard Cards */
+#balance {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+}
+
+.card h3 { font-size: 1rem; font-weight: 400; color: var(--text-body); }
+.card p { font-size: 2rem; font-weight: 600; margin-top: 0.5rem; }
+.card.total { background: var(--primary); color: white; }
+.card.total h3 { color: white; opacity: 0.8; }
+
+/* Caixas de Conteúdo */
+.box {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+h2 { margin-bottom: 1.5rem; font-weight: 600; font-size: 1.25rem; }
+
+/* Formulário em Linha */
+.input-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+input, select {
+    padding: 0.8rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+input:focus { border-color: var(--primary); }
+
+button {
+    width: 100%;
+    background: var(--green);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+button:hover { filter: brightness(1.1); }
+
+/* Tabela */
+.table-container { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 1rem; color: var(--text-body); border-bottom: 2px solid #f1f5f9; }
+td { padding: 1.2rem 1rem; border-bottom: 1px solid #f1f5f9; }
+
+.income { color: var(--green); }
+.expense { color: var(--red); }
+
+footer { text-align: center; padding: 2rem; color: var(--text-body); font-size: 0.9rem; }
+
+/* Mobile */
+@media (max-width: 700px) {
+    .input-row { grid-template-columns: 1fr; }
+}

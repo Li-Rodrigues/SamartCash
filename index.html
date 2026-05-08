@@ -9,102 +9,69 @@
 </head>
 <body>
 
-    <header>
+<header>
         <h1>Smart<span>Cash</span></h1>
         <p>Seu Dashboard Financeiro Inteligente</p>
     </header>
 
     <main class="container">
-        <!--Camada 2: Indicadores-->
         <section id="balance">
-            <h2 class="sr-only">Balanço</h2>
-
             <div class="card">
-                <h3>
-                    <span>Entradas</span>
-                    <img src="assets/img/income.svg" alt="Ícone de Entradas" onerror="this.style.display='none'">
-                </h3>
-                <p id="incomeDisplay">R$ 0,00</p>
+                <h3>Entradas</h3>
+                <p id="incomeDisplay" class="income">R$ 0,00</p>
             </div>
-
             <div class="card">
-                <h3>
-                    <span>Saídas</span>
-                    <img src="assets/img/expense.svg" alt="Ícone de Saídas" onerror="this.style.display='none'">
-                </h3>
-                <p id="expenseDisplay">R$ 0,00</p>
+                <h3>Saídas</h3>
+                <p id="expenseDisplay" class="expense">R$ 0,00</p>
             </div>
-
             <div class="card total">
-                <h3>
-                    <span>Total</span>
-                    <img src="assets/img/total.svg" alt="Ícone de Total" onerror="this.style.display='none'">
-                </h3>
+                <h3>Total</h3>
                 <p id="totalDisplay">R$ 0,00</p>
             </div>
         </section>
 
-        <!--Camada 2: Área de Cadastro-->
-        <section id="transaction-form">
+        <section id="transaction-form" class="box">
             <h2>Nova Transação</h2>
             <form id="form">
-                <div class="input-group">
-                    <label for="description" class="sr-only">Descrição</label>
-                    <input type="text" id="description" name="description" placeholder="Aluguel, Salário, Plano de Saúde, Compras" required>                    
-                </div>
-
-                <div class="input-group">
-                    <label for="amount" class="sr-only">Valor</label>
-                    <input type="number" step="0.01" id="amount" name="amount" placeholder="0,00" required>
-                    <small>Use o sinal - (negativo) para despesas.</small>
-                </div>
-
-                <div class="input-group">
-                    <label for="category" class="sr-only">Categoria</label>
-                    <select id="category"  name="category" required>
-                        <option value="" disabled selected>Selecione uma categoria</option>
+                <div class="input-row">
+                    <input type="text" id="description" placeholder="Descrição (ex: Aluguel)" required>
+                    <input type="number" step="0.01" id="amount" placeholder="Valor (ex: -50.00)" required>
+                    <select id="category" required>
+                        <option value="" disabled selected>Categoria</option>
                         <option value="Lazer">Lazer</option>
                         <option value="Alimentação">Alimentação</option>
                         <option value="Saúde">Saúde</option>
                         <option value="Moradia">Moradia</option>
                         <option value="Trabalho">Trabalho</option>
-                        <option value="Outros">Outros</option>
                     </select>
                 </div>
-
-                <div class="actions">
-                    <button type="submit">Salvar Transação</button>
-                </div>
+                <button type="submit">Adicionar Transação</button>
             </form>
         </section>
 
-        <!--Camada 2: Visualização de Dados-->
-        <section id="data-display">
+        <section id="data-display" class="box">
             <h2>Movimentações</h2>
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Categoria</th>
-                        <th>Data</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Injeção de Dados (DOM)-->
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Categoria</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 - SmartCash</p>
+        <p>&copy; 2026 - SmartCash | Gestão Financeira Inteligente</p>
     </footer>
 
-    <!-- Scripts por ordem de dependência -->
-    <script src="assets/js/storage.js"></script>
-    <script src="assets/js/dom.js"></script>
-    <script src="assets/js/script.js"></script>    
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
