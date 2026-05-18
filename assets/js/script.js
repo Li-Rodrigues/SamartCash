@@ -4,7 +4,28 @@ const Transaction = {
 
     add(transaction) {
         Transaction.all.push(transaction);
-        console.log(Transaction.all);
+        App.reload();
+    },
+    
+
+    incomes() {
+        let income = 0;
+        Transaction.all.forEach(transaction => {
+            if (transaction.amount > 0) income += transaction.amount;
+        });
+        return income;
+    },
+
+    expenses() {
+        let expense = 0;
+        Transaction.all.forEach(transaction => {
+            if (transaction.amount < 0) expense += transaction.amount;
+        });
+        return expense;
+    },
+
+    total() {
+        return Transaction.incomes() + Transaction.expenses();
     }
 };
 
@@ -21,7 +42,7 @@ const Form = {
         // 2. Criar o objeto com os dados capturados
         const newTransaction = {
             description: Form.description.value,
-            amount: Form.amount.value,
+            amount: Number (Form.amount.value),
             category: Form.category.value,
             date: new Date().toLocaleDateString('pt-BR')
         };
@@ -34,5 +55,17 @@ const Form = {
     }
 };
 
+const App = {
+    init() {
+        Transaction.all.forEach(DOM.addTransaction);
+        DOM.updateBalance();
+    },
+    reload() {
+        DOM.clearTransactions();
+        App.init();
+    }
+};
+
 // Escutar o evento de 'submit' (enviar) do formulário
 document.querySelector('#form').addEventListener('submit', Form.handleSave);
+App.init();
