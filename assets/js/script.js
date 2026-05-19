@@ -1,6 +1,19 @@
+// Persistência (STORAGE)
+const TransactionStorage = {
+    // Busca os dados salvos. Se não houver nada, retorna um array vazio []
+    get() {
+        return JSON.parse(localStorage.getItem("smartcash:transactions")) || [];
+    },
+
+    // Transforma o array em texto e salva no navegador
+    set(transactions) {
+        localStorage.setItem("smartcash:transactions", JSON.stringify(transactions));
+    }
+};
+
 // Objeto que armazena as transações (Estado da aplicação)
 const Transaction = {
-    all: [], // Nosso array que guardará os objetos
+    all: TransactionStorage.get(), // Modificação 1 - o array começa com o que está guardado no Storage
 
     add(transaction) {
         Transaction.all.push(transaction);
@@ -59,6 +72,9 @@ const App = {
     init() {
         Transaction.all.forEach(DOM.addTransaction);
         DOM.updateBalance();
+
+        // Modificação 2 - Toda vez que o App inicia ou atualiza, precisará atualizar o Storage
+        TransactionStorage.set(Transaction.all);
     },
     reload() {
         DOM.clearTransactions();
