@@ -24,10 +24,10 @@ const Transaction = {
     remove(index) {
         // Remove um (1) item a partir da posição 'index'
         Transaction.all.splice(index, 1);
-        
+
         // Recarrega o App para redesenhar a tabela e atualizar os saldos
         App.reload();
-    },    
+    },
 
     incomes() {
         let income = 0;
@@ -85,28 +85,53 @@ const Form = {
 
             // 🌟 Regra de UX: Se o usuário selecionou "Saída", o JS força o valor a ser negativo
             if (Form.type.value === 'expense') {
-                amountInCents = -Math.abs(amountInCents); 
+                amountInCents = -Math.abs(amountInCents);
             } else {
                 amountInCents = Math.abs(amountInCents); // Garante que entrada seja positiva
             }
 
-        // 3. Criar o objeto com os dados capturados
-        const newTransaction = {
-            description: Form.description.value,
-            amount: amountInCents, // Salva o valor em centavos (ex: se digitou 60, salva 6000)
-            category: Form.category.value,
-            date: new Date().toLocaleDateString('pt-BR')
-        };
+            // 3. Criar o objeto com os dados capturados
+            const newTransaction = {
+                description: Form.description.value,
+                amount: amountInCents, // Salva o valor em centavos (ex: se digitou 60, salva 6000)
+                category: Form.category.value,
+                date: new Date().toLocaleDateString('pt-BR')
+            };
 
-        // 4. Salvar no array
-        Transaction.add(newTransaction);
+            // 4. Salvar no array
+            Transaction.add(newTransaction);
 
-        // 5. Limpar o formulário para a próxima entrada
-        event.target.reset();
+            // 5. Limpar o formulário para a próxima entrada
+            event.target.reset();
+
+            // Força a atualização das cores dos inputs pós-reset
+            Form.updateInputColor();
 
         } catch (error) {
             // Se a validação falhar, vai mostrar um alerta com a mensagem do erro
             alert(error.message);
+        }
+    },
+
+
+    // REFINAMENTO: Função centralizada para atualizar as cores do input de valor
+    updateInputColor() {
+        const value = Number(Form.amount.value);
+        const type = Form.type.value;
+
+        if (value === 0) {
+            Form.amount.style.borderColor = '#e2e8f0';
+            Form.amount.style.color = 'inherit';
+            return;
+        }
+
+        // Se o tipo for saída, ou se ele digitou um número negativo, fica vermelho
+        if (type === 'expense' || value < 0) {
+            Form.amount.style.borderColor = 'var(--red)';
+            Form.amount.style.color = 'var(--red)';
+        } else {
+            Form.amount.style.borderColor = 'var(--green)';
+            Form.amount.style.color = 'var(--green)';
         }
     }
 };
@@ -131,19 +156,9 @@ const App = {
 
 // Escutar o evento de 'submit' (enviar) do formulário
 document.querySelector('#form').addEventListener('submit', Form.handleSave);
-App.init();
 
-// Listener dinâmico para dar feedback visual no input de valor (input vai mudar de cor)
-Form.amount.addEventListener('input', (e) => {
-    const value = Number(e.target.value);
-    if (value < 0) {
-        e.target.style.borderColor = 'var(--red)';
-        e.target.style.color = 'var(--red)';
-    } else if (value > 0) {
-        e.target.style.borderColor = 'var(--green)';
-        e.target.style.color = 'var(--green)';
-    } else {
-        e.target.style.borderColor = '#e2e8f0';
-        e.target.style.color = 'inherit';
-    }
-});
+// Ativa o feedback visual tanto ao digitar quanto ao mudar o tipo (Entrada/Saída)
+Form.amount.addEventListener('input', Form.updateInputColor);
+Form.type.addEventListener('change', Form.updateInputColor);
+
+App.init();
